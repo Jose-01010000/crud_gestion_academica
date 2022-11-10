@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Editar asignaturas {% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Gestion de cursos</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'editar_asignatura' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Id curso</label>
+                        <input type="text" class="form-control input__solid" name="asig_id" readonly required
+                            value="{{asignatura.id}}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Codigo asignatura</label>
+                        <input type="text" class="form-control" name="asig_codigo" required
+                            value="{{asignatura.codigo}}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre asignatura</label>
+                        <input type="text" class="form-control" name="asig_nombre" required
+                            value="{{asignatura.nombre}}">
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                        <a href="{% url 'asignaturas' %}" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

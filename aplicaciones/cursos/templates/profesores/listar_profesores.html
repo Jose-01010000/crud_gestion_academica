@@ -1,0 +1,47 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Profesores {% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12 offset-md-12">
+        {% if mensaje %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-circle-check pe-3"></i><strong>{{ mensaje }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        <h2>Listado de profesores</h2>
+        <div class="table-responsive">
+            <table class="table table-striped text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>id</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Telefono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for profesor in profesores %}
+                    <tr>
+                        <td>{{ profesor.id }}</td>
+                        <td>{{ profesor.nombre }}</td>
+                        <td>{{ profesor.correo }}</td>
+                        <td>{{ profesor.telefono }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example"><a
+                                    href="{% url 'edicion_profesor' profesor.id %}" class="btn btn-primary"><i
+                                        class="fa-solid fa-pen-to-square me-2"></i>Editar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

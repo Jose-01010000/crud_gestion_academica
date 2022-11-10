@@ -1,0 +1,98 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Clases {% endblock %}
+{% block content %}
+
+<div class="row">
+
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Gestion de clases</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'guardar_clase' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Salon</label>
+                        <input type="text" class="form-control" name="clase_salon" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Horario</label>
+                        <input type="text" class="form-control" name="clase_horario" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Seleccionar Profesor</label>
+                        <select class="form-select" name="profesor" id="profesor" required>
+                            {% if profesores|length <= 0 %}
+                            <option disabled>
+                                No se encuentran profesores
+                            </option>
+                            {% endif %}
+                            {% for profesor in profesores %}
+                            <option name="profesor" value="{{ profesor.id }}">
+                                {{ profesor.nombre }}
+                            </option>
+                            {% endfor%}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Seleccionar asignatura
+                        </label>
+                        <select class="form-select" name="asignatura" id="asignatura" required>
+                            {% if asignaturas|length <= 0 %}
+                            <option disabled>
+                                No se encuentran asignaturas
+                            </option>
+                            {% endif %}
+                            {% for asignatura in asignaturas %}
+                            <option name="asignatura" value="{{ asignatura.id }}">
+                                {{ asignatura.nombre }} - {{ asignatura.codigo }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h2>Listado de clases</h2>
+        <div class="table-responsive">
+            <table class="table table-striped text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>id</th>
+                        <th>Salon</th>
+                        <th>Horario</th>
+                        <th>Profesor</th>
+                        <th>Asignatura</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for clase in clase %}
+                    <tr>
+                        <td>{{ clase.id }}</td>
+                        <td>{{ clase.salon }}</td>
+                        <td>{{ clase.horario }}</td>
+                        <td>{{ clase.profesor.nombre }}</td>
+                        <td>{{ clase.asignatura.nombre }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="{% url 'edicion_clase' clase.id %}" class="btn btn-primary"><i
+                                        class="fa-solid fa-pen-to-square me-2"></i>Editar</a>
+                                <a href="{% url 'eliminar_clase' clase.id %}" class="btn btn-danger"><i
+                                        class="fa-solid fa-trash me-2"></i>Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

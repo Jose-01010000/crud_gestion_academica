@@ -1,0 +1,68 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Asignaturas {% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 col-auto">
+        {% if mensaje %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-circle-check pe-3"></i><strong>{{ mensaje }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        <h2>Gestion de cursos</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'guardar_asignatura' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Codigo asignatura</label>
+                        <input type="text" class="form-control" name="asig_codigo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre asignatura</label>
+                        <input type="text" class="form-control" name="asig_nombre" required>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8 col-auto">
+        <h2>Listado de asignaturas</h2>
+        <div class="table-responsive">
+            <table class="table table-striped text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>id</th>
+                        <th>Nombre</th>
+                        <th>Codigo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for asignatura in asignaturas %}
+                    <tr>
+                        <td>{{ asignatura.id }}</td>
+                        <td>{{ asignatura.nombre }}</td>
+                        <td>{{ asignatura.codigo }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="{% url 'edicion_asignatura' asignatura.id %}" class="btn btn-primary"><i
+                                        class="fa-solid fa-pen-to-square me-2"></i>Editar</a>
+                                <a href="{% url 'eliminar_asignatura' asignatura.id %}" class="btn btn-danger"><i
+                                        class="fa-solid fa-trash me-2"></i>Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

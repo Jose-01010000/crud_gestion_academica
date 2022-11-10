@@ -1,0 +1,59 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Editar clases {% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Gestion de clases</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'editar_clase' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Id clase</label>
+                        <input type="text" class="form-control input__solid" name="clase_id" required readonly
+                            value="{{ clase.id }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Salon</label>
+                        <input type="text" class="form-control" name="clase_salon" required value="{{ clase.salon }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Horario</label>
+                        <input type="text" class="form-control" name="clase_horario" required
+                            value="{{ clase.horario }}"">
+                    </div>
+                    <div class=" mb-3">
+                        <label class="form-label">Seleccionar Profesor</label>
+                        <select class="form-select" name="profesor" id="profesor" required>
+                            <!-- <option selected>{{ clase.profesor.nombre }}</option> -->
+                            {% for profesor in profesores %}
+                            <option name="profesor" value="{{ profesor.id }}">
+                                {{ profesor.nombre }}
+                            </option>
+                            {% endfor%}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Seleccionar asignatura
+                        </label>
+                        <select class="form-select" name="asignatura" id="asignatura" required>
+                            <!-- <option selected>{{ clase.asignatura.nombre }} - {{ clase.asignatura.codigo }}</option> -->
+                            {% for asignatura in asignaturas %}
+                            <option name="asignatura" value="{{ asignatura.id }}">
+                                {{ asignatura.nombre }} - {{ asignatura.codigo }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <a href="{% url 'clases' %}" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

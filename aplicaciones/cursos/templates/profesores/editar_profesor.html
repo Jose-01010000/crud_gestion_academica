@@ -1,0 +1,40 @@
+{% extends 'layouts/base.html' %}
+{% block title %} Editar profesores {% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Gestion de profesores</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'editar_profesor' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Id profesor</label>
+                        <input type="text" class="form-control input__solid" name="pro_id" readonly required
+                            value="{{ profesor.id }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="pro_nombre" required value="{{profesor.nombre}}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Correo</label>
+                        <input type="text" class="form-control" name="pro_correo" required value="{{profesor.correo}}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telefono</label>
+                        <input type="text" class="form-control" name="pro_telefono" required
+                            value="{{profesor.telefono}}">
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <a href="{% url 'profesores' %}" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
